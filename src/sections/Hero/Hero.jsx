@@ -278,9 +278,9 @@ export default function HeroSection() {
                   const birthDateInput = document.getElementById("birth-date");
                   if (birthDateInput) {
                     const today = new Date();
-                    const maxYear = today.getFullYear() - 4;
+                    const maxYear = today.getFullYear() - 2;
                     const maxDate = `${maxYear}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
-                    const minYear = today.getFullYear() - 20;
+                    const minYear = today.getFullYear() - 22;
                     const minDate = `${minYear}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
                     
                     birthDateInput.setAttribute("max", maxDate); 
