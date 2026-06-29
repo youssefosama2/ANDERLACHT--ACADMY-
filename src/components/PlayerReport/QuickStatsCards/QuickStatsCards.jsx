@@ -1,21 +1,19 @@
 import React, { useMemo } from "react";
-import { useTranslation } from "react-i18next";
 import { faStar, faChartLine, faFileAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useReport } from "../../../Context/ReportContext";
 import "./QuickStatsCards.css";
 
 const QuickStatsCards = () => {
-  const { t, i18n } = useTranslation();
   const { allEvaluations, loading } = useReport();
 
   const statsData = useMemo(() => {
     if (!allEvaluations?.length) {
       return [
-        { title: t("report.quickStats.performanceGrowth"), value: "0%", desc: t("report.quickStats.noData"), icon: faChartLine },
-        { title: t("report.quickStats.lastEvaluation"), value: "0", desc: "---", icon: faStar },
-        { title: t("report.quickStats.bestEvaluation"), value: "0", desc: "---", icon: faStar },
-        { title: t("report.quickStats.totalEvaluations"), value: "0", desc: t("report.quickStats.evaluations"), icon: faFileAlt }
+        { title: "تطور الأداء", value: "0%", desc: "لا توجد بيانات", icon: faChartLine },
+        { title: "آخر تقييم", value: "0", desc: "---", icon: faStar },
+        { title: "أفضل تقييم", value: "0", desc: "---", icon: faStar },
+        { title: "إجمالي التقييمات", value: "0", desc: "تقييمات", icon: faFileAlt }
       ];
     }
 
@@ -29,28 +27,30 @@ const QuickStatsCards = () => {
 
     const formatDate = (date) => {
       if (!date) return "---";
-      return new Date(date).toLocaleDateString(i18n.language === "ar" ? "ar-EG" : "en-US", { month: "long", year: "numeric" });
+      return new Date(date).toLocaleDateString("ar-EG", { month: "long", year: "numeric" });
     };
 
     return [
-      { title: t("report.quickStats.totalEvaluations"), value: sortedEvaluations.length, desc: t("report.quickStats.evaluations"), icon: faFileAlt },
-      { title: t("report.quickStats.lastEvaluation"), value: lastEvaluation?.total_score || 0, desc: formatDate(lastEvaluation?.created_at), icon: faStar },
-      { title: t("report.quickStats.bestEvaluation"), value: bestEvaluation?.total_score || 0, desc: formatDate(bestEvaluation?.created_at), icon: faStar },
+      { title: "إجمالي التقييمات", value: sortedEvaluations.length, desc: "تقييمات", icon: faFileAlt },
+      { title: "آخر تقييم", value: lastEvaluation?.total_score || 0, desc: formatDate(lastEvaluation?.created_at), icon: faStar },
+      { title: "أفضل تقييم", value: bestEvaluation?.total_score || 0, desc: formatDate(bestEvaluation?.created_at), icon: faStar },
       { 
-        title: t("report.quickStats.performanceGrowth"), 
+        title: "تطور الأداء", 
         value: `${improvement > 0 ? "+" : ""}${improvement}%`, 
-        desc: improvement >= 0 ? t("report.quickStats.improved") : t("report.quickStats.decreased"), 
+        desc: improvement >= 0 ? "تحسن عام" : "انخفاض الأداء", 
         green: improvement > 0, 
         negative: improvement < 0, 
         icon: faChartLine 
       }
     ];
-  }, [allEvaluations, t, i18n.language]);
+  }, [allEvaluations]);
 
   if (loading) {
     return (
       <div className="row g-3 mb-4">
-        <div style={{ textAlign: "center", padding: "20px", color: "#64748b", fontWeight: "600" }}>{t("report.quickStats.loading")}</div>
+        <div style={{ textAlign: "center", padding: "20px", color: "#64748b", fontWeight: "600" }}>
+          جاري تحميل الإحصائيات...
+        </div>
       </div>
     );
   }

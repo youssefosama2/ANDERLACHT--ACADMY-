@@ -8,18 +8,24 @@
   font-weight: 400;
   margin-top: 10px;
 }
+.programs ul{
+  padding: 0;
+  margin: 0;
+}
 .programs li{
   list-style: disc;
   margin-right: 30px;
+  margin-top: 10px;
 }
 .programs img{
   width: 100%;
-  height: 100%;
+  height: 400px;
   border-radius: 20px;
 }
 .programs button{
     padding: 10px 30px;
     border-radius: 50px;
+    margin-top: 10px;
 }
 .program-text{
   display: flex;
@@ -43,5 +49,8 @@
   }
   .programs .program-text h2{
     margin-top: 10px;
+  }
+  .programs button{
+    width: 100%;
   }
 }

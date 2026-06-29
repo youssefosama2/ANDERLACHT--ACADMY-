@@ -17,14 +17,14 @@ import { handleJoin } from "../../utils/joinHandler";
 const Home = () => {
   return (
     <>
-    {/* <NavBar /> */}
+    <NavBar />
     <Hero />
-    {/* <About />    
+    <About />    
     <Pricing />
     <Player />
     <Programs />
     <State />
-    <Footer /> */}
+    <Footer />
     </>
   )
 }

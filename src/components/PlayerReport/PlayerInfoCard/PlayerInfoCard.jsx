@@ -1,20 +1,8 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
 import { useReport } from "../../../Context/ReportContext";
 import "./PlayerInfoCard.css";
 
-const getPositionKey = (position) => {
-  switch (position?.trim()) {
-    case "مهاجم": case "Forward": return "forward";
-    case "مدافع": case "Defender": return "defender";
-    case "خط وسط": case "Midfielder": return "midfielder";
-    case "حارس مرمى": case "Goalkeeper": return "goalkeeper";
-    default: return null;
-  }
-};
-
 const PlayerInfoCard = () => {
-  const { t } = useTranslation();
   const { playerData, currentEvaluation, loading } = useReport();
 
   if (loading) {
@@ -22,7 +10,7 @@ const PlayerInfoCard = () => {
       <div className="row mb-4">
         <div className="col-12">
           <section className="player-info-card" style={{ minHeight: "160px", display: "flex", alignItems: "center", justifyContent: "center", color: "#64748b", fontWeight: "600" }}>
-            {t("report.playerInfo.loadingPlayer")}
+            جاري تحميل بيانات اللاعب...
           </section>
         </div>
       </div>
@@ -34,7 +22,7 @@ const PlayerInfoCard = () => {
       <div className="row mb-4">
         <div className="col-12">
           <section className="player-info-card" style={{ minHeight: "160px", display: "flex", alignItems: "center", justifyContent: "center", color: "#ef4444", fontWeight: "600" }}>
-            {t("report.playerInfo.playerNotFound")}
+            اللاعب غير موجود
           </section>
         </div>
       </div>
@@ -42,13 +30,14 @@ const PlayerInfoCard = () => {
   }
 
   const coachName = currentEvaluation?.coach_name || "---";
-  const positionKey = getPositionKey(playerData?.position);
+  
+  const playerPosition = playerData?.position || "---";
 
   const dataFields = [
-    { label: t("report.playerInfo.coach"), value: coachName },
-    { label: t("report.playerInfo.ageCategory"), value: playerData.age_category ? `${playerData.age_category} ${t("report.playerInfo.years")}` : "---" },
-    { label: t("report.playerInfo.position"), value: positionKey ? t(`report.playerInfo.positions.${positionKey}`) : playerData.position || "---" },
-    { label: t("report.playerInfo.playerCode"), value: playerData.player_code || "---" },
+    { label: "المدرب", value: coachName },
+    { label: "الفئة العمرية", value: playerData.age_category ? `${playerData.age_category} سنة` : "---" },
+    { label: "المركز", value: playerPosition },
+    { label: "رقم اللاعب", value: playerData.player_code || "---" },
   ];
 
   return (
@@ -58,11 +47,11 @@ const PlayerInfoCard = () => {
           <div className="player-profile">
             <img 
               src={playerData.avatar_url || "/assets/default-player.png"} 
-              alt={playerData.name || t("report.playerInfo.player")} 
+              alt={playerData.name || "لاعب"} 
               onError={(e) => { e.target.src = "/assets/default-player.png"; }} 
             />
             <div>
-              <h3>{playerData.name || t("report.playerInfo.player")}</h3>
+              <h3>{playerData.name || "لاعب"}</h3>
             </div>
           </div>
 

@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from "react";
-import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
   faFutbol, faDumbbell, faBrain, faStar, faEye, 
@@ -10,44 +9,46 @@ import "./SkillsOverview.css";
 
 const SkillsOverview = () => {
   const { currentEvaluation, loading } = useReport();
-  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("technical");
   const [showAllSkills, setShowAllSkills] = useState(false);
 
   const skillsScores = currentEvaluation?.skills_scores || {};
   const getScore = (key) => Number(skillsScores?.[key]) || 0;
 
+  // المهارات الفنية بنصوص عربية ثابتة مباشرة
   const technicalSkills = useMemo(() => [
-    { title: t("report.skills.receivePass"), score: getScore("الاستلام والتسليم"), color: "#2563ff", icon: faFutbol },
-    { title: t("report.skills.passing"), score: getScore("التمرير"), color: "#22c55e", icon: faPersonRunning },
-    { title: t("report.skills.shooting"), score: getScore("التصويب"), color: "#9333ea", icon: faShieldHalved },
-    { title: t("report.skills.dribbling"), score: getScore("المراوغة"), color: "#f59e0b", icon: faBolt },
-    { title: t("report.skills.vision"), score: getScore("الرؤية والتمرير الطويل"), color: "#14b8a6", icon: faEye },
-    { title: t("report.skills.technicalPerformance"), score: getScore("الأداء المهاري"), color: "#ec4899", icon: faFire },
-  ], [skillsScores, t]);
+    { title: "الاستلام والتسليم", score: getScore("الاستلام والتسليم"), color: "#2563ff", icon: faFutbol },
+    { title: "التمرير", score: getScore("التمرير"), color: "#22c55e", icon: faPersonRunning },
+    { title: "التصويب", score: getScore("التصويب"), color: "#9333ea", icon: faShieldHalved },
+    { title: "المراوغة", score: getScore("المراوغة"), color: "#f59e0b", icon: faBolt },
+    { title: "الرؤية والتمرير الطويل", score: getScore("الرؤية والتمرير الطويل"), color: "#14b8a6", icon: faEye },
+    { title: "الأداء المهاري", score: getScore("الأداء المهاري"), color: "#ec4899", icon: faFire },
+  ], [skillsScores]);
 
+  // اللياقة البدنية بنصوص عربية ثابتة مباشرة
   const fitnessSkills = useMemo(() => [
-    { title: t("report.skills.strength"), score: getScore("القوة"), color: "#f97316", icon: faDumbbell },
-    { title: t("report.skills.endurance"), score: getScore("التحمل"), color: "#22c55e", icon: faMedal },
-    { title: t("report.skills.speed"), score: getScore("السرعة"), color: "#2563ff", icon: faBolt },
-    { title: t("report.skills.agility"), score: getScore("الرشاقة"), color: "#9333ea", icon: faPersonRunning },
-    { title: t("report.skills.balance"), score: getScore("الاتزان والتناسق"), color: "#14b8a6", icon: faShieldHalved },
-    { title: t("report.skills.coordination"), score: getScore("الأداء الحركي التوافقي"), color: "#f59e0b", icon: faFire },
-  ], [skillsScores, t]);
+    { title: "القوة", score: getScore("القوة"), color: "#f97316", icon: faDumbbell },
+    { title: "التحمل", score: getScore("التحمل"), color: "#22c55e", icon: faMedal },
+    { title: "السرعة", score: getScore("السرعة"), color: "#2563ff", icon: faBolt },
+    { title: "الرشاقة", score: getScore("الرشاقة"), color: "#9333ea", icon: faPersonRunning },
+    { title: "الاتزان والتناسق", score: getScore("الاتزان والتناسق"), color: "#14b8a6", icon: faShieldHalved },
+    { title: "الأداء الحركي التوافقي", score: getScore("الأداء الحركي التوافقي"), color: "#f59e0b", icon: faFire },
+  ], [skillsScores]);
 
+  // الذكاء والانضباط بنصوص عربية ثابتة مباشرة
   const mentalSkills = useMemo(() => [
-    { title: t("report.skills.teamwork"), score: getScore("العمل الجماعي"), color: "#22c55e", icon: faBrain },
-    { title: t("report.skills.decisionMaking"), score: getScore("اتخاذ القرار"), color: "#10b981", icon: faStar },
-    { title: t("report.skills.focus"), score: getScore("التركيز"), color: "#ef4444", icon: faEye },
-    { title: t("report.skills.footballIQ"), score: getScore("الذكاء الكروي"), color: "#9333ea", icon: faBrain },
-    { title: t("report.skills.discipline"), score: getScore("الالتزام والانضباط"), color: "#2563ff", icon: faShieldHalved },
-    { title: t("report.skills.leadership"), score: getScore("الشخصية والقيادة"), color: "#ec4899", icon: faMedal },
-  ], [skillsScores, t]);
+    { title: "العمل الجماعي", score: getScore("العمل الجماعي"), color: "#22c55e", icon: faBrain },
+    { title: "اتخاذ القرار", score: getScore("اتخاذ القرار"), color: "#10b981", icon: faStar },
+    { title: "التركيز", score: getScore("التركيز"), color: "#ef4444", icon: faEye },
+    { title: "الذكاء الكروي", score: getScore("الذكاء الكروي"), color: "#9333ea", icon: faBrain },
+    { title: "الالتزام والانضباط", score: getScore("الالتزام والانضباط"), color: "#2563ff", icon: faShieldHalved },
+    { title: "الشخصية والقيادة", score: getScore("الشخصية والقيادة"), color: "#ec4899", icon: faMedal },
+  ], [skillsScores]);
 
   const tabs = [
-    { key: "technical", title: t("report.skillsOverview.technical"), icon: faFutbol, data: technicalSkills },
-    { key: "fitness", title: t("report.skillsOverview.fitness"), icon: faDumbbell, data: fitnessSkills },
-    { key: "mental", title: t("report.skillsOverview.mental"), icon: faBrain, data: mentalSkills },
+    { key: "technical", title: "المهارات الفنية", icon: faFutbol, data: technicalSkills },
+    { key: "fitness", title: "اللياقة البدنية", icon: faDumbbell, data: fitnessSkills },
+    { key: "mental", title: "الذكاء والانضباط", icon: faBrain, data: mentalSkills },
   ];
 
   const allSkills = useMemo(() => [...technicalSkills, ...fitnessSkills, ...mentalSkills], [technicalSkills, fitnessSkills, mentalSkills]);
@@ -64,25 +65,25 @@ const SkillsOverview = () => {
   }, [allSkills]);
 
   const getLevel = (score) => {
-    if (score >= 90) return t("report.skillsOverview.excellent");
-    if (score >= 80) return t("report.skillsOverview.veryGood");
-    if (score >= 65) return t("report.skillsOverview.good");
-    if (score >= 50) return t("report.skillsOverview.acceptable");
-    return t("report.skillsOverview.weak");
+    if (score >= 90) return "ممتاز";
+    if (score >= 80) return "جيد جداً";
+    if (score >= 65) return "جيد";
+    if (score >= 50) return "مقبول";
+    return "ضعيف";
   };
 
   const getLevelClass = (s) => (s >= 90 ? "excellent" : s >= 80 ? "very-good" : s >= 65 ? "good" : s >= 50 ? "acceptable" : "weak");
   const renderStars = (s) => Array.from({ length: s >= 90 ? 5 : s >= 80 ? 4 : s >= 65 ? 3 : s >= 50 ? 2 : 1 }).map((_, i) => <FontAwesomeIcon key={i} icon={faStar} className="star-icon" />);
 
-  if (loading) return <div style={{ textAlign: "center", padding: "40px", color: "#64748b", fontWeight: "600" }}>{t("report.skillsOverview.loading")}</div>;
+  if (loading) return <div style={{ textAlign: "center", padding: "40px", color: "#64748b", fontWeight: "600" }}>جاري تحميل المهارات...</div>;
 
   return (
     <>
       <div className="skills-overview-section">
         <div className="skills-overview-header">
           <div className="header-title">
-            <h2>{t("report.skillsOverview.title")}</h2>
-            <p>{t("report.skillsOverview.subtitle")}</p>
+            <h2>تقرير الأداء التفصيلي للاعب</h2>
+            <p>تحليل كامل لجميع مهارات اللاعب</p>
           </div>
           <div className="skills-tabs">
             {tabs.map((tab) => (
@@ -107,19 +108,21 @@ const SkillsOverview = () => {
         </div>
 
         <div className="show-all-wrapper">
-          <button className="show-all-button" onClick={() => setShowAllSkills(!showAllSkills)}>{showAllSkills ? t("report.skillsOverview.showLess") : t("report.skillsOverview.showAll", { count: allSkills.length })}</button>
+          <button className="show-all-button" onClick={() => setShowAllSkills(!showAllSkills)}>
+            {showAllSkills ? "عرض أقل" : `عرض جميع الـ ${allSkills.length} مهارة`}
+          </button>
         </div>
       </div>
 
       <div className="performance-analysis-section">
-        <AnalysisCard title={t("report.skillsOverview.strengths")} icon={faMedal} type="strengths" data={topSkills} />
-        <AnalysisCard title={t("report.skillsOverview.weaknesses")} icon={faFire} type="weakness" data={weakSkills} />
+        <AnalysisCard title="نقاط القوة" icon={faMedal} type="strengths" data={topSkills} />
+        <AnalysisCard title="يحتاج تطوير" icon={faFire} type="weakness" data={weakSkills} />
         <div className="analysis-card overall-skills-card">
-          <div className="analysis-header overall"><h3>{t("report.skillsOverview.summary")}</h3><FontAwesomeIcon icon={faFire} /></div>
+          <div className="analysis-header overall"><h3>ملخص المهارات</h3><FontAwesomeIcon icon={faFire} /></div>
           <div className="analysis-list">
-            <SummaryItem label={t("report.skillsOverview.technicalSummary")} score={averages.technical} />
-            <SummaryItem label={t("report.skillsOverview.fitnessSummary")} score={averages.fitness} />
-            <SummaryItem label={t("report.skillsOverview.mentalSummary")} score={averages.mental} />
+            <SummaryItem label="المهارات الفنية" score={averages.technical} />
+            <SummaryItem label="اللياقة البدنية" score={averages.fitness} />
+            <SummaryItem label="الذكاء والانضباط" score={averages.mental} />
           </div>
         </div>
       </div>

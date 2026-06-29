@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
@@ -8,7 +7,6 @@ import imageCompression from "browser-image-compression";
 
 import { supabase } from "../../utils/supabaseClient";
 import { ACADEMY_ID } from "../../config/academy";
-import { handleJoin } from "../../utils/joinHandler.js";
 import "./Hero.css";
 
 const positionsList = [
@@ -25,7 +23,6 @@ const positionsList = [
   "رأس حربة (ST)",
 ];
 
-// إضافة حاوية الهاتف الدولية المدمجة والمتناسقة مع الـ swal-grid
 const registrationFormTemplate = `
 <div class="swal-player-form">
 
@@ -56,71 +53,78 @@ const registrationFormTemplate = `
     </p>
   </div>
 
-  <div class="swal-grid">
+<div class="swal-grid">
 
-    <input
-      id="player-name"
-      placeholder="اسم اللاعب *"
-    />
+  <input
+    id="player-name"
+    placeholder="اسم اللاعب *"
+  />
 
-    <input
-      id="birth-date"
-      type="text"
-      placeholder="تاريخ الميلاد *"
-      onfocus="(this.type='date')"
-      onblur="(this.value ? this.type='date' : this.type='text')"
-    />
+  <input
+    id="birth-date"
+    type="text"
+    placeholder="تاريخ الميلاد *"
+    onfocus="(this.type='date')"
+    onblur="(this.value ? this.type='date' : this.type='text')"
+  />
 
-    <select id="player-position">
-      <option value="">اختر المركز *</option>
-      ${positionsList
-        .map(
-          (p) =>
-            `<option value="${p}">${p}</option>`
-        )
-        .join("")}
+  <select id="player-position">
+    <option value="">اختر المركز *</option>
+    ${positionsList
+      .map(
+        (p) =>
+          `<option value="${p}">${p}</option>`
+      )
+      .join("")}
+  </select>
+
+  <select id="player-branch">
+    <option value="">اختر الفرع *</option>
+    <option value="وابور المياة">وابور المياة</option>
+    <option value="سموحة">سموحة</option>
+    <option value="فرق الدورى">فرق الدورى</option>
+  </select>
+
+  <div class="swal-phone-group" style="display:flex;gap:8px;direction:ltr;">
+    <select id="player-country" class="form-select" style="width:110px;font-size:13px;border:1px solid #ccc;border-radius:6px;padding:0 4px;background:#fff;">
+      <option value="+20" selected>🇪🇬 +20</option>
+      <option value="+966">🇸🇦 +966</option>
+      <option value="+971">🇦🇪 +971</option>
+      <option value="+965">🇰🇼 +965</option>
+      <option value="+973">🇧🇭 +973</option>
+      <option value="+974">🇶🇦 +974</option>
+      <option value="+968">🇴🇲 +968</option>
+      <option value="+962">🇯🇴 +962</option>
+      <option value="+961">🇱🇧 +961</option>
+      <option value="+964">🇮🇶 +964</option>
+      <option value="+970">🇵🇸 +970</option>
+      <option value="+218">🇱🇾 +218</option>
+      <option value="+216">🇹🇳 +216</option>
+      <option value="+213">🇩🇿 +213</option>
+      <option value="+212">🇲🇦 +212</option>
+      <option value="+249">🇸🇩 +249</option>
+      <option value="+967">🇾🇪 +967</option>
     </select>
 
-    <select id="player-branch">
-      <option value="">اختر الفرع *</option>
-      <option value="وابور المياة">وابور المياة</option> 
-    </select>
+    <input
+      id="parent-phone"
+      placeholder="رقم الهاتف *"
+      type="tel"
+      style="flex:1;margin:0;text-align:right;"
+    />
+  </div>
 
-    <!-- نظام إدخال الهاتف الدولي المدمج -->
-    <div class="swal-phone-group" style="display: flex; gap: 8px; direction: ltr; grid-column: span 1;">
-      <select id="player-country" class="form-select" style="width: 110px; font-size: 13px; border: 1px solid #ccc; border-radius: 6px; padding: 0 4px; background-color: #fff;">
-        <option value="+20" selected>🇪🇬 +20</option>
-        <option value="+966">🇸🇦 +966</option>
-        <option value="+971">🇦🇪 +971</option>
-        <option value="+965">🇰🇼 +965</option>
-        <option value="+973">🇧🇭 +973</option>
-        <option value="+974">🇶🇦 +974</option>
-        <option value="+968">🇴🇲 +968</option>
-        <option value="+962">🇯🇴 +962</option>
-        <option value="+961">🇱🇧 +961</option>
-        <option value="+964">🇮🇶 +964</option>
-        <option value="+970">🇵🇸 +970</option>
-        <option value="+218">🇱🇾 +218</option>
-        <option value="+216">🇹نون +216</option>
-        <option value="+213">🇩🇿 +213</option>
-        <option value="+212">🇲🇦 +212</option>
-        <option value="+249">🇸🇩 +249</option>
-        <option value="+967">🇾🇪 +967</option>
-      </select>
-      <input
-        id="parent-phone"
-        placeholder="رقم الهاتف *"
-        type="tel"
-        style="flex: 1; margin: 0; text-align: right;"
-      />
-    </div>
+  <textarea
+    id="medical-notes"
+    placeholder="هل يوجد مشاكل صحية؟ (اختياري)"
+    rows="3"
+  ></textarea>
 
-    <textarea
-      id="medical-notes"
-      placeholder="هل يوجد مشاكل صحية؟ (اختياري)"
-      rows="3"
-    ></textarea>
-
+  <div class="swal-declaration">
+    <p>
+      <strong>إقرار ولي الأمر:</strong><br>
+      يقر ولي الأمر بأن نجله لائق صحيًا ولا يعاني من أي ظروف أو مشكلات صحية تمنعه من ممارسة النشاط الرياضي، وفي حالة وجود أي مشكلة صحية فقد تم توضيحها في خانة الملاحظات الطبية أعلاه.
+    </p>
   </div>
 
 </div>
@@ -150,12 +154,7 @@ const compressImage = async (file) => {
 };
 
 export default function HeroSection() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
-
-  const [players, setPlayers] = useState(0);
-  const [coaches, setCoaches] = useState(0);
-  const [championships, setChampionships] = useState(0);
   const [playerCode, setPlayerCode] = useState("");
 
   const handleSearch = async () => {
@@ -163,7 +162,7 @@ export default function HeroSection() {
     if (!trimmedCode) {
       Swal.fire({
         icon: "warning",
-        title: t("hero.search.enterCode"),
+        title: "أدخل كود اللاعب",
         scrollbarPadding: false,
       });
       return;
@@ -180,8 +179,8 @@ export default function HeroSection() {
       if (error || !data) {
         Swal.fire({
           icon: "error",
-          title: t("hero.search.notFound"),
-          text: t("hero.search.checkCode"),
+          title: "اللاعب غير موجود",
+          text: "تأكد من كود اللاعب",
           scrollbarPadding: false,
         });
         return;
@@ -191,51 +190,23 @@ export default function HeroSection() {
     } catch (err) {
       Swal.fire({
         icon: "error",
-        title: t("hero.search.error"),
-        text: t("hero.search.failed"),
+        title: "خطأ",
+        text: "تعذر البحث عن اللاعب",
         scrollbarPadding: false,
       });
     }
   };
 
-  const startCounter = (target, setState) => {
-    let count = 0;
-    const speed = 20;
-    const increment = target / 50; 
-
-    const update = () => {
-      count += increment;
-      if (count < target) {
-        setState(Math.ceil(count));
-        setTimeout(update, speed);
-      } else {
-        setState(target);
-      }
-    };
-    update();
-  };
-
-  useEffect(() => {
-    startCounter(170, setPlayers);
-    startCounter(16, setCoaches);
-    startCounter(12, setChampionships);
-  }, []);
-
   return (
     <section className="hero d-flex align-items-center">
       <div className="container text-white text-center">
-        <span className="badge bg-primary mb-3">
-          {t("hero.badge")} ⚽
-        </span>
-
-        <h1 className="fw-bold mb-3">{t("hero.title")}</h1>
-        <p className="mb-4">{t("hero.desc")}</p>
-
+        <h1 className="fw-bold mb-3">اصنع بطل كرة القدم القادم</h1>
+        <p className="mb-4">تدريب احترافي من 3 إلى 16 سنة بإشراف مدربين محترفين</p>
+        
         <div className="d-flex justify-content-center gap-3 flex-wrap">
           <button
             className="btn btn-outline-light px-4"
             onClick={async () => {
-
               let imageFile = null;
 
               const handleImageClick = () =>
@@ -264,7 +235,7 @@ export default function HeroSection() {
               };
 
               const result = await Swal.fire({
-                title: "طلب انضمام لاعب",
+                // title: "طلب انضمام لاعب",
                 html: registrationFormTemplate,
                 showCancelButton: true,
                 confirmButtonText: "إرسال الطلب",
@@ -294,6 +265,16 @@ export default function HeroSection() {
                 },
 
                 preConfirm: () => {
+                  if (!imageFile) {
+                    const picker = document.getElementById("imagePicker");
+                    picker.style.border = "2px solid #dc3545";
+                    setTimeout(() => {
+                      picker.style.border = "";
+                    }, 2000);
+                    return Swal.showValidationMessage("يرجى إضافة صورة اللاعب");
+                  }
+
+
                   const playerName = document.getElementById("player-name")?.value.trim();
                   const birthDate = document.getElementById("birth-date")?.value;
                   const position = document.getElementById("player-position")?.value;
@@ -306,18 +287,15 @@ export default function HeroSection() {
                     return Swal.showValidationMessage("أكمل الحقول المطلوبة");
                   }
 
-                  // تنظيف رقم الهاتف المدخل من أي حروف أو رموز
                   phone = phone.replace(/\D/g, "");
                   if (!phone) {
                     return Swal.showValidationMessage("يرجى إدخال رقم هاتف صحيح.");
                   }
 
-                  // إزالة الصفر الافتتاحي إن وجد (مثل 010 أو 05) لمنع التكرار مع كود الدولة
                   if (phone.startsWith("0")) {
                     phone = phone.substring(1);
                   }
 
-                  // الدمج الدولي النهائي الآمن للنظام
                   phone = `${countryCode}${phone}`;
 
                   return {
@@ -360,7 +338,7 @@ export default function HeroSection() {
                       birth_date: result.value.birthDate,
                       position: result.value.position,
                       branch: result.value.branch,
-                      parent_phone: result.value.phone, // يُحفظ بصيغته الدولية الصافية الكاملة
+                      parent_phone: result.value.phone,
                       medical_notes: result.value.medicalNotes,
                       player_image: imageUrl,
                       status: "pending",
@@ -388,38 +366,22 @@ export default function HeroSection() {
         </div>
 
         <div className="player-search-box mt-4">
-          <h5 className="mb-3">{t("hero.search.title")}</h5>
-          <div className="d-flex justify-content-center gap-2 flex-wrap">
+          <h5 className="mb-3">ابحث عن تقرير اللاعب</h5>
+          <div className="d-flex justify-content-center align-items-center gap-2 w-100 mx-auto" style={{ maxWidth: "500px" }}>
             <input
               type="text"
-              className="form-control search-input"
-              placeholder={t("hero.search.placeholder")}
+              className="form-control search-input flex-grow-1"
+              placeholder="أدخل كود اللاعب"
               value={playerCode}
               onChange={(e) => setPlayerCode(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSearch()}
             />
-            <button className="btn btn-primary btn-search-custom" onClick={handleSearch}>
+            <button className="btn btn-primary btn-search-custom flex-shrink-0" onClick={handleSearch}>
               <FontAwesomeIcon icon={faSearch} />
             </button>
           </div>
-        </div>
-
-        <div className="stats hero-stats mt-5 d-flex justify-content-center gap-4 flex-wrap">
-          <StatItem value={players} label={t("hero.players")} plus />
-          <StatItem value={coaches} label={t("hero.coaches")} />
-          <StatItem value={championships} label={t("hero.championships")} plus />
         </div>
       </div>
     </section>
   );
 }
-
-const StatItem = ({ value, label, plus }) => (
-  <div>
-    <h4>
-      {value}
-      {plus && <span className="text-primary"> +</span>}
-    </h4>
-    <span>{label}</span>
-  </div>
-);

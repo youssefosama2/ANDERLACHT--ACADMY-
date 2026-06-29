@@ -1,57 +1,60 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
-import { useTranslation } from "react-i18next";
 import "./Programs.css";
 import { handleJoin } from "../../utils/joinHandler.js";
-import { data } from "react-router";
 
 const Programs = () => {
-  const { t, i18n } = useTranslation();
-
   const programs = [
     {
-      title: t("programs.program1.title"),
-      desc: t("programs.program1.desc"),
-      image:
-        "/assets/img/full-shot-kid-training-football_23-2149270946.webp",
-      btn: t("programs.program1.btn"),
+      title: "تدريبات اللياقة البدنية",
+      desc: "تشرف على برامجنا المتخصصة:",
+      image: "/assets/img/img-academy4.jpeg",
+      btn: "سجل طفلك الآن",
       reverse: false,
-      points: t("programs.program1.points", {
-        returnObjects: true,
-      }),
       animation: "fadeInLeft",
+      points: [
+        "طاقم من مدربي اللياقة البدنية المؤهلين ذوي الخبرة الواسعة.",
+        "نستخدم أحدث الأساليب العلمية والتدريبية لضمان فعالية برامجنا.",
+        "نقدم برامج متنوعة تناسب جميع الفئات العمرية ومستويات اللياقة.",
+        "نؤمن بأهمية التدرج في التدريب ونحرص على سلامة وأمان لاعبينا.",
+        "نظام غذائي صحي متوازن يُكمل برامج اللياقة البدنية."
+      ],
     },
-
     {
-      title: t("programs.program2.title"),
-      desc: t("programs.program2.desc"),
-      image:
-        "/assets/img/football-trainer-teaching-kid-side-view_23-2149742035.webp",
-      btn: t("programs.program2.btn"),
+      title: "التدريبات الذهنية والفنية",
+      desc: "تهدف برامجنا الى:",
+      image: "/assets/img/img-academy3.webp",
+      btn: "انضم الآن",
       reverse: true,
-      points: t("programs.program2.points", {
-        returnObjects: true,
-      }),
       animation: "fadeInRight",
+      points: [
+        "تعزيز صحة القلب والأوعية الدموية وتحسين وظائف الجهاز التنفسي.",
+        "تقوية العضلات والمفاصل وتحسين اللياقة البدنية.",
+        "الحفاظ على وزن صحي ومكافحة السمنة.",
+        "تعزيز صحة العظام وتقليل خطر الإصابة بهشاشة العظام.",
+        "تحسين المزاج وتقليل التوتر وتعزيز الثقة بالنفس."
+      ],
     },
-
     {
-      title: t("programs.program3.title"),
-      desc: t("programs.program3.desc"),
-      image:
-        "/assets/img/boy-training-football-field_141188-5743.webp",
-      btn: t("programs.program3.btn"),
+      title: "تدريبات الاوزان والانضباط",
+      desc: "مع برامج اللياقة البدنية ، ستتمكن من:",
+      image: "/assets/img/img-academy2.webp",
+      btn: "استثمر فى مستقبل طفلك",
       reverse: false,
-      points: t("programs.program3.points", {
-        returnObjects: true,
-      }),
       animation: "fadeInLeft",
+      points: [
+        "تحقيق أقصى قدر من إمكانياتك الكروية.",
+        "الحصول على جسم صحي وقوي.",
+        "تعزيز ثقتك بنفسك وتحسين مزاجك.",
+        "العيش بأسلوب حياة أكثر نشاطا وصحة.",
+        "انضم إلينا اليوم وابدأ رحلتك نحو اللياقة البدنية والإنجاز."
+      ],
     },
   ];
 
   return (
     <section className="programs py-5" id="programs">
-      <Container fluid>
+      <Container-fluid>
         {programs.map((item, index) => (
           <Row
             key={index}
@@ -59,10 +62,12 @@ const Programs = () => {
               item.reverse
                 ? "flex-column-reverse flex-lg-row-reverse"
                 : "flex-column-reverse flex-lg-row"
-            } wow ${item.animation}`} data-wow-duration="2s" data-wow-delay=".2s">
+            } wow ${item.animation}`} 
+            data-wow-duration="2s" 
+            data-wow-delay=".2s"
+          >
             <Col lg={6} md={12}>
-              <div
-                className={`program-content ${ i18n.language === "en" ? "text-start" : "text-end"} }`}>
+              <div className="program-content text-end">
                 <h2>{item.title}</h2>
                 <p>{item.desc}</p>
                 <ul>
@@ -75,10 +80,7 @@ const Programs = () => {
                   onClick={() =>
                     handleJoin({
                       type: "info",
-                      plan:
-                        i18n.language === "ar"
-                          ? "استفسار"
-                          : "Inquiry",
+                      plan: "استفسار",
                     })
                   }
                 >
@@ -86,6 +88,7 @@ const Programs = () => {
                 </Button>
               </div>
             </Col>
+            
             <Col lg={6} md={12}>
               <div className="program-image">
                 <img
@@ -98,7 +101,7 @@ const Programs = () => {
             </Col>
           </Row>
         ))}
-      </Container>
+      </Container-fluid>
     </section>
   );
 };

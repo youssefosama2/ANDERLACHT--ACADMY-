@@ -24,11 +24,11 @@ function App() {
   return (
     <>
     <BrowserRouter>
-  <Routes>
-    <Route path="/" element={<Home />} />
-    <Route path="/report/:playerCode" element={<ReportPage />} /><Route path="/player-report/:playerCode/:evaluationId" element={<ReportPage />}/>
-  </Routes>
-</BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/report/:playerCode" element={<ReportPage />} /><Route path="/player-report/:playerCode/:evaluationId" element={<ReportPage />}/>
+      </Routes>
+    </BrowserRouter>
     
     </>
   )

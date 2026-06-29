@@ -1,29 +1,25 @@
 import Swal from "sweetalert2";
-import i18next from "i18next"; // استيراد المكتبة مباشرة
 
 export const handleJoin = (data = {}) => {
   const {
-    plan = i18next.language === 'ar' ? "غير محدد" : "Not Specified",
+    plan = "غير محدد",
     type = "join"
   } = data;
 
-  const isAr = i18next.language === 'ar';
-
   Swal.fire({
-    title: type === "trial" ? i18next.t("join.trial_title") : i18next.t("join.join_title"),
+    title: type === "trial" ? "احجز تجربة مجانية ⚽" : "انضم للأكاديمية ⚽",
     
-    // إضافة كلاس لضبط الاتجاه بناءً على اللغة
     customClass: {
-      popup: isAr ? 'swal2-rtl' : ''
+      popup: 'swal2-rtl'
     },
 
     html: `
-      <input type="text" id="swal-name" class="swal2-input" placeholder="${i18next.t("join.name_placeholder")}">
-      <input type="number" id="swal-age" class="swal2-input" placeholder="${i18next.t("join.age_placeholder")}">
-      <input type="tel" id="swal-phone" class="swal2-input" placeholder="${i18next.t("join.phone_placeholder")}">
+      <input type="text" id="swal-name" class="swal2-input" placeholder="اسم اللاعب">
+      <input type="number" id="swal-age" class="swal2-input" placeholder="العمر">
+      <input type="tel" id="swal-phone" class="swal2-input" placeholder="رقم ولي الأمر">
     `,
 
-    confirmButtonText: i18next.t("join.send"),
+    confirmButtonText: "إرسال",
     focusConfirm: false,
 
     preConfirm: () => {
@@ -32,7 +28,7 @@ export const handleJoin = (data = {}) => {
       const phone = document.getElementById("swal-phone").value.trim();
 
       if (!name || !age || !phone) {
-        Swal.showValidationMessage(i18next.t("join.error_msg"));
+        Swal.showValidationMessage("من فضلك املأ كل البيانات");
         return false;
       }
 
@@ -42,15 +38,14 @@ export const handleJoin = (data = {}) => {
     if (!result.isConfirmed) return;
 
     const { name, age, phone } = result.value;
-    const academyPhone = "201091654379";
+    const academyPhone = "201222996826";
 
-    // رسالة الواتساب المترجمة
     const message =
-      `${i18next.t("join.wa_request")}%0A%0A` +
-      `* ${i18next.t("join.wa_name")}:* ${name}%0A` +
-      `* ${i18next.t("join.wa_age")}:* ${age}%0A` +
-      `* ${i18next.t("join.wa_phone")}:* ${phone}%0A` +
-      `* ${i18next.t("join.wa_plan")}:* ${plan}%0A%0A`;
+      `طلب جديد ⚽%0A%0A` +
+      `* الاسم:* ${name}%0A` +
+      `* العمر:* ${age}%0A` +
+      `* الرقم:* ${phone}%0A` +
+      `* الخطة:* ${plan}%0A%0A`;
 
     window.open(
       `https://wa.me/${academyPhone}?text=${message}`,

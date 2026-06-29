@@ -1,6 +1,5 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useTranslation } from "react-i18next";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHouse, faShareNodes, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
@@ -9,15 +8,14 @@ import "./ReportActions.css";
 
 const ReportActions = () => {
   const navigate = useNavigate();
-  const { t } = useTranslation();
 
   const handleShare = async () => {
     const url = window.location.href;
     try {
       if (navigator.share) {
         await navigator.share({
-          title: t("report.actions.shareTitle"),
-          text: t("report.actions.shareText"),
+          title: "تقرير اللاعب",
+          text: "تقرير تقييم اللاعب",
           url,
         });
         return;
@@ -31,7 +29,7 @@ const ReportActions = () => {
 
   const handleWhatsappShare = () => {
     const url = window.location.href;
-    const text = `${t("report.actions.shareWhatsappTitle")}\n\n${url}`;
+    const text = `⚽ تقرير اللاعب\n\n${url}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank");
   };
 
@@ -47,7 +45,7 @@ const ReportActions = () => {
   const showSuccessAlert = () => {
     Swal.fire({
       icon: "success",
-      title: t("report.actions.linkCopied"),
+      title: "تم نسخ الرابط بنجاح",
       timer: 1500,
       showConfirmButton: false,
       scrollbarPadding: false,
@@ -58,22 +56,22 @@ const ReportActions = () => {
     <div className="report-actions">
       <button className="action-btn home-btn" onClick={() => navigate("/")}>
         <FontAwesomeIcon icon={faHouse} />
-        <span>{t("report.actions.home")}</span>
+        <span>الرئيسية</span>
       </button>
 
       <button className="action-btn whatsapp-btn" onClick={handleWhatsappShare}>
         <FontAwesomeIcon icon={faWhatsapp} />
-        <span>{t("report.actions.whatsapp")}</span>
+        <span>واتساب</span>
       </button>
 
       <button className="action-btn share-btn" onClick={handleShare}>
         <FontAwesomeIcon icon={faShareNodes} />
-        <span>{t("report.actions.share")}</span>
+        <span>مشاركة</span>
       </button>
 
       <button className="action-btn copy-btn" onClick={copyLink}>
         <FontAwesomeIcon icon={faCopy} />
-        <span>{t("report.actions.copyLink")}</span>
+        <span>نسخ الرابط</span>
       </button>
     </div>
   );

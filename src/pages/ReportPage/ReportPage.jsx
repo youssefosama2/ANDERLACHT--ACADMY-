@@ -14,18 +14,19 @@ import EvaluationsTable from "../../components/PlayerReport/EvaluationsTable/Eva
 import { useInView } from "react-intersection-observer";
 import { useParams } from "react-router-dom";
 import ReportActions from "../../components/PlayerReport/ReportActions/ReportActions";
-import { useTranslation } from "react-i18next";
+
 function ReportContent() {
   const { playerData, loading } = useReport();
-  const { t } = useTranslation();
+  
   const { ref: radarRef, inView: radarInView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: performanceRef, inView: performanceInView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: evolutionRef, inView: evolutionInView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const { ref: compareRef, inView: compareInView } = useInView({ triggerOnce: true, threshold: 0.1 });
+
   if (loading) {
     return (
       <div style={{ height: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <h3>{t("report.page.loadingReport")}</h3>
+        <h3>جاري تحميل التقرير...</h3>
       </div>
     );
   }
@@ -33,11 +34,12 @@ function ReportContent() {
     return (
       <div className="container text-center py-5" style={{ minHeight: "70vh" }}>
         <h1>⚽</h1>
-        <h2 className="mb-3">{t("report.page.playerNotFound")}</h2>
-        <p>{t("report.page.playerNotFoundDescription")}</p>
+        <h2 className="mb-3">اللاعب غير موجود</h2>
+        <p>تأكد من كود اللاعب ثم حاول مرة أخرى</p>
       </div>
     );
   }
+
   return (
     <div className="dashboard">
       <main className="main-content">
@@ -45,6 +47,7 @@ function ReportContent() {
           <ReportActions />
           <PlayerInfoCard />
           <QuickStatsCards />
+          
           <div className="row g-3 mb-4">
             <div className="col-lg-3" ref={radarRef}>
               <RadarSkillsChart radarInView={radarInView} />
@@ -56,6 +59,7 @@ function ReportContent() {
               <ComparePlayersCard compareInView={compareInView} />
             </div>
           </div>
+          
           <div className="row g-3 mb-4">
             <div className="col-lg-3">
               <CoachNotesCard />
@@ -67,6 +71,7 @@ function ReportContent() {
               <OverallRatingCard />
             </div>
           </div>
+          
           <SkillsOverview />
           <EvaluationsTable />
         </div>
@@ -74,12 +79,15 @@ function ReportContent() {
     </div>
   );
 }
+
 const ReportPage = () => {
   const { playerCode, evaluationId } = useParams();
+  
   return (
     <ReportProvider playerCode={playerCode} evaluationId={evaluationId}>
       <ReportContent />
     </ReportProvider>
   );
 };
+
 export default ReportPage;

@@ -2,20 +2,18 @@ import React, { useEffect, useRef, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "./State.css";
 import { handleJoin } from "../../utils/joinHandler.js";
-import { useTranslation } from "react-i18next"; 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 
 export default function StatsSection() {
-  const { t, i18n } = useTranslation();
   const sectionRef = useRef(null);
   const [start, setStart] = useState(false);
 
   const statsData = [
-    { title: t("stats.coach"), target: 16, plus: true },
-    { title: t("stats.technical"), target: 8 },
-    { title: t("stats.trophies"), target: 12 },
-    { title: t("stats.player"), target: 170, plus: true },
+    { title: "مدرب محترف", target: 16, plus: true },
+    { title: "فني", target: 8 },
+    { title: "بطولات", target: 12 },
+    { title: "لاعب احترافي", target: 170, plus: true },
   ];
   
   const [counts, setCounts] = useState(statsData.map(() => 0));
@@ -53,26 +51,27 @@ export default function StatsSection() {
         if (current >= item.target) clearInterval(interval);
       }, 25);
     });
-  }, [start, i18n.language]);
+  }, [start]);
 
   return (
     <>
-      <div ref={sectionRef} id="joinUs" className="stats-section py-5 wow fadeInUp"  data-wow-duration="2s" data-wow-delay=".2s" >
+      <div ref={sectionRef} id="joinUs" className="stats-section py-5 wow fadeInUp" data-wow-duration="2s" data-wow-delay=".2s">
         <Container className="bg-dark text-white p-5 rounded-5 shadow-lg">
           <Row className="align-items-center g-5">
-            <Col lg={6} className={i18n.language === 'ar' ? "text-lg-end text-center" : "text-lg-start text-center"}>
+            <Col lg={6} className="text-lg-end text-center">
               <h2 className="fw-bold mb-3 position-relative d-inline-block">
-                {t("stats.heading")}
+                أرقام أكاديمية أندرلخت
                 <span className="title-line"></span>
               </h2>
-              <p className="text-white-50 lh-lg mb-4">{t("stats.description")}</p>
+              <p className="text-white-50 lh-lg mb-4">منذ تأسيسها في عام 2022، حرصت الأكاديمية على تطوير مواهب كرة القدم ونُؤمن بأن كل طفل يملك موهبة تستحق التطوير.</p>
               <Button 
                 className="btn btn-primary rounded-pill px-5 py-2 fw-bold" 
-                onClick={() => handleJoin({ type: "info", plan: t("stats.btn") })}
+                onClick={() => handleJoin({ type: "info", plan: "الاستفسار" })}
               > 
-                {t("stats.btn")}
+                انضم الآن
               </Button>
             </Col>
+            
             <Col lg={6}>
               <Row className="text-center g-4">
                 {statsData.map((item, index) => (
@@ -91,9 +90,10 @@ export default function StatsSection() {
           </Row>
         </Container>
       </div>
+
       <div>
         <a
-          href="https://wa.me/201091654379"
+          href="https://wa.me/201222996826"
           className="whatsapp"
           target="_blank"
           rel="noreferrer"
