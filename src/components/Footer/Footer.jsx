@@ -80,9 +80,9 @@ export default function Footer() {
           <Col md={6} className="text-center text-md-start">
             <div className="social-icons d-flex justify-content-center justify-content-md-start gap-2">
               <a href="https://www.facebook.com/share/1D7yM2CZMt/" className="rounded-circle border p-2 text-dark"><FontAwesomeIcon icon={faFacebookF} /></a>
-              <a href="#!" className="rounded-circle border p-2 text-dark"><FontAwesomeIcon icon={faYoutube} /></a>
-              <a href="#!" className="rounded-circle border p-2 text-dark"><FontAwesomeIcon icon={faInstagram} /></a>
-              <a href="https://wa.me/201091654379" className="rounded-circle border p-2 text-dark"><FontAwesomeIcon icon={faWhatsapp} /></a>
+              {/* <a href="#!" className="rounded-circle border p-2 text-dark"><FontAwesomeIcon icon={faYoutube} /></a> */}
+              {/* <a href="#!" className="rounded-circle border p-2 text-dark"><FontAwesomeIcon icon={faInstagram} /></a> */}
+              <a href="https://wa.me/201222996826" className="rounded-circle border p-2 text-dark"><FontAwesomeIcon icon={faWhatsapp} /></a>
             </div>
           </Col>
           <Col md={6} className="text-center text-md-end">

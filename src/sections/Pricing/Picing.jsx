@@ -33,7 +33,7 @@ const Pricing = () => {
 
   return (
     <>
-      <section className="pricing-section" id="pricing">
+      {/* <section className="pricing-section" id="pricing">
         <Container fluid className="bg-light-custom p-4 p-md-5 rounded-5">
           <Row className="mb-4 align-items-center wow fadeInUp" data-wow-duration="2s" data-wow-delay=".2s">
             <Col lg={6}>
@@ -69,7 +69,7 @@ const Pricing = () => {
             ))}
           </Row>
         </Container>
-      </section>
+      </section> */}
 
       <section className="quote-section py-5 text-center wow fadeInUp" data-wow-duration="2s" data-wow-delay=".2s">
         <Container>
